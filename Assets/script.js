@@ -1,22 +1,24 @@
+//Initializing the references for all future variables.
 var tickingTime = $("#currentDay");
 var population = $("#blocks");
 var momentous = moment().format("MMM Do YYYY LT");
 
+//Declaring functional variables and using moment.js to determine current time and update the current time on screen
 tickingTime.textContent = momentous;
-//var secondsSinceLoad = 0;
 var startAM = 9;
 var endPM = 17;
 var currentHr = moment().format("HH");
-console.log(currentHr);
 
 //Populating our page with timeblocks
 function populate(){
     tickingTime.text(momentous);
+    //For loop that controls the creation of each individual element and renders it out
     for (i = startAM; i <= endPM; i++){
         var rows = $("<section>");
         rows.attr("class", "row");
         var colsHr = $("<div>");
         colsHr.attr("class", "col-2 hour");
+
         //Determining whether it's AM or PM on just our Text
         if (i<12){
             var timeFrame = $("<p>");
@@ -35,13 +37,14 @@ function populate(){
             return;
         }
 
+        //Appending time stamps for each hour into the row
         colsHr.append(timeFrame)
         rows.append(colsHr);
         var colsInput = $("<textarea>");
         colsInput.text(localStorage.getItem(i));
         colsInput.attr("id", i);
-        //Conditional Formatting to change colors of the background accordingly
 
+        //Conditional Formatting Controller to change colors of the background accordingly
         if (i < parseInt(currentHr)){    
             colsInput.attr("class", "col-8 description past");
         } else if (i === parseInt(currentHr)){
@@ -50,6 +53,7 @@ function populate(){
             colsInput.attr("class", "col-8 description future");
         }
 
+        //appending all data past the time stamps into the row
         rows.append(colsInput);
         var buttonCol = $("<button>");
         buttonCol.attr("class", "col-2 saveBtn");
@@ -61,28 +65,27 @@ function populate(){
         population.append(rows);
     }
 }
+
+//Render the whole screen out.
 populate();
 
+//Function to set the Key elements into local storage
 population.on("click", "button", function(e) {
     e.preventDefault();
     var information = $(this).prev().val();
-    console.log("I've been clicked");
     localStorage.setItem($(this).attr("data-id"), information);
 })
 
-//$(document).on("click", ".movie". alertMovieName)
+
+// var secondsSinceLoad = 0;
 // Tried to get a function to update this live but it wasn't working as intended
 // function countStart() {
 //     var timerInterval = setInterval(function () {
-//         secondsSinceLoad++;
 //         tickingTime.textContent = momentous;
-
-
 //         if (secondsSinceLoad === 3600) {
 //             clearInterval(timerInterval);
 //             // return;
 //         }
-
 //     }, 1000);
 // }
 // countStart();
