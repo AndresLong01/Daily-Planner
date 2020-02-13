@@ -3,7 +3,7 @@ var population = $("#blocks");
 var momentous = moment().format("MMM Do YYYY LT");
 
 tickingTime.textContent = momentous;
-var secondsSinceLoad = 0;
+//var secondsSinceLoad = 0;
 var startAM = 9;
 var endPM = 17;
 var currentHr = moment().format("HH");
@@ -11,6 +11,7 @@ console.log(currentHr);
 
 //Populating our page with timeblocks
 function populate(){
+    tickingTime.text(momentous);
     for (i = startAM; i <= endPM; i++){
         var rows = $("<section>");
         rows.attr("class", "row");
@@ -37,6 +38,8 @@ function populate(){
         colsHr.append(timeFrame)
         rows.append(colsHr);
         var colsInput = $("<textarea>");
+        colsInput.text(localStorage.getItem(i));
+        colsInput.attr("id", i);
         //Conditional Formatting to change colors of the background accordingly
 
         if (i < parseInt(currentHr)){    
@@ -50,13 +53,24 @@ function populate(){
         rows.append(colsInput);
         var buttonCol = $("<button>");
         buttonCol.attr("class", "col-2 saveBtn");
+        buttonCol.attr("data-id", i);
+        var icon = $("<i>");
+        icon.attr("class", "fas fa-save");
+        buttonCol.append(icon);
         rows.append(buttonCol);
-        //var $br = $("<br>");
         population.append(rows);
-        //population.append($br);
     }
 }
 populate();
+
+population.on("click", "button", function(e) {
+    e.preventDefault();
+    var information = $(this).prev().val();
+    console.log("I've been clicked");
+    localStorage.setItem($(this).attr("data-id"), information);
+})
+
+//$(document).on("click", ".movie". alertMovieName)
 // Tried to get a function to update this live but it wasn't working as intended
 // function countStart() {
 //     var timerInterval = setInterval(function () {
@@ -72,4 +86,3 @@ populate();
 //     }, 1000);
 // }
 // countStart();
-console.log(momentous);
