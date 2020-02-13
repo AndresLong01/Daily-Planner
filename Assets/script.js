@@ -10,30 +10,30 @@ var endPM = 17;
 var currentHr = moment().format("HH");
 
 //Populating our page with timeblocks
-function populate(){
+function populate() {
     tickingTime.text(momentous);
     //For loop that controls the creation of each individual element and renders it out
-    for (i = startAM; i <= endPM; i++){
+    for (i = startAM; i <= endPM; i++) {
         var rows = $("<section>");
         rows.attr("class", "row");
         var colsHr = $("<div>");
         colsHr.attr("class", "col-2 hour");
 
         //Determining whether it's AM or PM on just our Text
-        if (i<12){
+        if (i < 12) {
             var timeFrame = $("<p>");
             timeFrame.attr("class", "text-center");
             timeFrame.text(i + " AM");
-        }else if (i===12){
+        } else if (i === 12) {
             var timeFrame = $("<p>");
             timeFrame.attr("class", "text-center");
             timeFrame.text(i + " PM");
-        }else if (i<=24){
-            var j = i-12;
+        } else if (i <= 24) {
+            var j = i - 12;
             var timeFrame = $("<p>");
             timeFrame.attr("class", "text-center");
             timeFrame.text(j + " PM");
-        }else {
+        } else {
             return;
         }
 
@@ -45,11 +45,11 @@ function populate(){
         colsInput.attr("id", i);
 
         //Conditional Formatting Controller to change colors of the background accordingly
-        if (i < parseInt(currentHr)){    
+        if (i < parseInt(currentHr)) {
             colsInput.attr("class", "col-8 description past");
-        } else if (i === parseInt(currentHr)){
+        } else if (i === parseInt(currentHr)) {
             colsInput.attr("class", "col-8 description present");
-        } else if (parseInt(currentHr)<i){
+        } else if (parseInt(currentHr) < i) {
             colsInput.attr("class", "col-8 description future");
         }
 
@@ -70,7 +70,7 @@ function populate(){
 populate();
 
 //Function to set the Key elements into local storage
-population.on("click", "button", function(e) {
+population.on("click", "button", function (e) {
     e.preventDefault();
     var information = $(this).prev().val();
     localStorage.setItem($(this).attr("data-id"), information);
