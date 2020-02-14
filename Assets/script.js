@@ -41,8 +41,8 @@ function populate() {
         colsHr.append(timeFrame)
         rows.append(colsHr);
         var colsInput = $("<textarea>");
-        colsInput.text(localStorage.getItem(i));
         colsInput.attr("id", i);
+        colsInput.text(localStorage.getItem(i));
 
         //Conditional Formatting Controller to change colors of the background accordingly
         if (i < parseInt(currentHr)) {
